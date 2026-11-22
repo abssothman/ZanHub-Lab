@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "path": "/", "title": "ZanHR Lab — Practical HR education for Africa" },
+    { "path": "/404", "title": "Page not found — ZanHR Lab" }
+  ]
+}
