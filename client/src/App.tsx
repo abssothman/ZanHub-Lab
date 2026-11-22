@@ -11,6 +11,11 @@ const HOME_PATH = BASE_PATH ? `${BASE_PATH}/` : "/";
 const NOT_FOUND_PATH = BASE_PATH ? `${BASE_PATH}/404` : "/404";
 
 function Router() {
+  const currentPath = window.location.pathname;
+  if (BASE_PATH && (currentPath === BASE_PATH || currentPath === `${BASE_PATH}/`)) {
+    return <Home />;
+  }
+
   return (
     <Switch>
       <Route path={HOME_PATH} component={Home} />
