@@ -28,6 +28,8 @@ const navItems = [
   { label: "For organizations", href: "#organizations" },
 ];
 
+const brandLogoSrc = `${import.meta.env.BASE_URL}zanhr-lab-logo.png`;
+
 const audiences = [
   { title: "Students", copy: "Turn classroom theory into practical workplace confidence.", icon: GraduationCap },
   { title: "Job seekers", copy: "Build a clearer CV, stronger interviews, and a more intentional career plan.", icon: Target },
@@ -69,11 +71,7 @@ export default function Home() {
       <header className="site-header">
         <div className="container flex items-center justify-between py-5">
           <a href="#top" className="brand-lockup" aria-label="ZanHR Lab home" onClick={closeMenu}>
-            <span className="brand-mark">Z</span>
-            <span>
-              <span className="brand-name">ZanHR</span>
-              <span className="brand-suffix">LAB</span>
-            </span>
+            <img src={brandLogoSrc} alt="ZanHR Lab" className="brand-logo" />
           </a>
 
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
@@ -222,7 +220,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-main"><div className="footer-brand"><a href="#top" className="brand-lockup"><span className="brand-mark">Z</span><span><span className="brand-name">ZanHR</span><span className="brand-suffix">LAB</span></span></a><p>Making HR understandable, accessible, and practical for Africa.</p></div><div className="footer-links"><div><span className="footer-heading">Explore</span><a href="#why">Why ZanHR</a><a href="#learn">Learning hub</a><a href="#careers">Career resources</a></div><div><span className="footer-heading">Connect</span><a href="#contact">Newsletter</a><a href="#organizations">For organizations</a><a href="mailto:hello@zanhrlab.com">hello@zanhrlab.com</a></div></div><div className="social-links"><span className="footer-heading">Follow along</span><div><a href="#contact" aria-label="YouTube"><Youtube size={18} /></a><a href="#contact" aria-label="Instagram"><Instagram size={18} /></a><a href="#contact" aria-label="LinkedIn"><Linkedin size={18} /></a><a href="#contact" aria-label="Facebook"><Facebook size={18} /></a></div></div></div><div className="container footer-bottom"><span>© 2026 ZanHR Lab. Built for better work.</span><span>Education · Careers · Organizations · Innovation</span></div></footer>
+      <footer className="site-footer"><div className="container footer-main"><div className="footer-brand"><a href="#top" className="brand-lockup" aria-label="ZanHR Lab home"><img src={brandLogoSrc} alt="ZanHR Lab" className="brand-logo" /></a><p>Making HR understandable, accessible, and practical for Africa.</p></div><div className="footer-links"><div><span className="footer-heading">Explore</span><a href="#why">Why ZanHR</a><a href="#learn">Learning hub</a><a href="#careers">Career resources</a></div><div><span className="footer-heading">Connect</span><a href="#contact">Newsletter</a><a href="#organizations">For organizations</a><a href="mailto:hello@zanhrlab.com">hello@zanhrlab.com</a></div></div><div className="social-links"><span className="footer-heading">Follow along</span><div><a href="#contact" aria-label="YouTube"><Youtube size={18} /></a><a href="#contact" aria-label="Instagram"><Instagram size={18} /></a><a href="#contact" aria-label="LinkedIn"><Linkedin size={18} /></a><a href="#contact" aria-label="Facebook"><Facebook size={18} /></a></div></div></div><div className="container footer-bottom"><span>© 2026 ZanHR Lab. Built for better work.</span><span>Education · Careers · Organizations · Innovation</span></div></footer>
     </div>
   );
 }

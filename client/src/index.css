@@ -31,6 +31,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .site-header { position: relative; z-index: 20; background: rgba(251,250,246,.9); border-bottom: 1px solid var(--line); backdrop-filter: blur(16px); }
 .brand-lockup { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.03em; }
+.brand-logo { display: block; width: min(190px, 40vw); height: auto; object-fit: contain; }
 .brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--ink); color: var(--gold); font-family: Georgia, serif; font-size: 21px; font-weight: 400; }
 .brand-name { display: block; font-size: 17px; line-height: 1; }
 .brand-suffix { display: block; margin-top: 3px; color: var(--coral); font-size: 8px; letter-spacing: .28em; line-height: 1; }
