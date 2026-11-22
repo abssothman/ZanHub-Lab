@@ -1,6 +1,10 @@
 {
   "routes": [
     { "path": "/", "title": "ZanHR Lab — Practical HR education for Africa" },
+    { "path": "/learn/", "title": "Learning hub — ZanHR Lab" },
+    { "path": "/careers/", "title": "Career resources — ZanHR Lab" },
+    { "path": "/organizations/", "title": "For organizations — ZanHR Lab" },
+    { "path": "/about/", "title": "About and contact — ZanHR Lab" },
     { "path": "/404", "title": "Page not found — ZanHR Lab" }
   ]
 }
