@@ -20,15 +20,15 @@ import {
   Youtube,
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
-import { SiteLanguage, SitePage, siteCopy } from "@/lib/siteCopy";
+import { siteCopy, sitePagePaths, type SiteLanguage, type SitePage } from "@/lib/siteCopy";
 
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
 const brandLogoSrc = `${import.meta.env.BASE_URL}zanhr-lab-logo.png`;
 const audienceIcons = [GraduationCap, Target, Users, BriefcaseBusiness];
 
 const pageHref = (page: SitePage) => {
-  const suffix = page === "home" ? "" : `${page}/`;
-  return `${BASE_PATH}/${suffix}`;
+  const routePath = sitePagePaths[page];
+  return `${BASE_PATH}${routePath === "/" ? "/" : `${routePath}/`}`;
 };
 
 function LanguagePicker({
@@ -98,6 +98,12 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
     { page: "organizations", label: t.nav.organizations },
     { page: "about", label: t.nav.about },
   ];
+  const audienceNavItems: { page: SitePage; label: string }[] = [
+    { page: "organizations", label: t.nav.organizations },
+    { page: "peopleAtWork", label: t.nav.peopleAtWork },
+    { page: "jobSeekers", label: t.nav.jobSeekers },
+    { page: "students", label: t.nav.students },
+  ];
 
   return (
     <div className={`min-h-screen bg-[#fbfaf6] text-[#183a33] page-${page}`}>
@@ -138,7 +144,19 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
         </div>
         {menuOpen && (
           <nav className="mobile-menu lg:hidden" aria-label={t.navigationLabel}>
-            {navItems.map((item) => (
+            {navItems.filter((item) => item.page !== "organizations").map((item) => (
+              <a
+                key={item.page}
+                href={pageHref(item.page)}
+                className="mobile-nav-link"
+                aria-current={page === item.page ? "page" : undefined}
+                onClick={closeMenu}
+              >
+                {item.label}
+              </a>
+            ))}
+            <span className="mobile-menu-group-title">{t.audienceNavLabel}</span>
+            {audienceNavItems.map((item) => (
               <a
                 key={item.page}
                 href={pageHref(item.page)}
@@ -213,13 +231,13 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
               <div className="container audience-grid">
                 {t.audiences.map(({ title, copy }, index) => {
                   const Icon = audienceIcons[index];
-                  const target: SitePage = index === 3 ? "organizations" : "careers";
+                  const target: SitePage[] = ["students", "jobSeekers", "peopleAtWork", "organizations"];
                   return (
                     <article className={`audience-card audience-${index + 1}`} key={title}>
                       <div className="audience-icon"><Icon size={21} strokeWidth={1.7} /></div>
                       <h3>{title}</h3>
                       <p>{copy}</p>
-                      <a href={pageHref(target)} aria-label={`${language === "en" ? "Explore resources for" : "Chunguza rasilimali za"} ${title}`}><ArrowUpRight size={17} /></a>
+                      <a href={pageHref(target[index])} aria-label={`${language === "en" ? "Explore resources for" : "Chunguza rasilimali za"} ${title}`}><ArrowUpRight size={17} /></a>
                     </article>
                   );
                 })}
@@ -262,9 +280,49 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
 
         {page === "organizations" && (
           <section id="organizations" className="section org-section page-section">
+            <div className="container"><div className="coming-soon-notice" role="status"><Sparkles size={17} aria-hidden="true" />{t.comingSoon}</div></div>
             <div className="container org-grid">
               <div className="org-copy"><div className="eyebrow">{t.organizations.eyebrow}</div><h1>{t.organizations.title} <em>{t.organizations.accent}</em>{t.organizations.titleEnd}</h1><p>{t.organizations.copy}</p><a className="text-link" href={`${pageHref("about")}#contact`}>{t.organizations.link} <ArrowRight size={16} /></a></div>
               <div className="org-pillars">{t.organizations.pillars.map((pillar, index) => <div className="pillar" key={pillar.title}><span>0{index + 1}</span><strong>{pillar.title}</strong><p>{pillar.copy}</p></div>)}</div>
+            </div>
+          </section>
+        )}
+
+        {page === "peopleAtWork" && (
+          <section className="section org-section page-section people-work-section">
+            <div className="container">
+              <div className="coming-soon-notice" role="status"><Sparkles size={17} aria-hidden="true" />{t.comingSoon}</div>
+              <div className="section-heading-row audience-page-heading">
+                <div><div className="eyebrow">{t.peopleAtWork.eyebrow}</div><h1>{t.peopleAtWork.title} <em>{t.peopleAtWork.accent}</em></h1></div>
+                <p>{t.peopleAtWork.copy}</p>
+              </div>
+              <div className="audience-resource-grid">
+                {t.peopleAtWork.topics.map((topic, index) => <article className="audience-resource-card" key={topic.title}><span>0{index + 1}</span><h2>{topic.title}</h2><p>{topic.copy}</p></article>)}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {page === "jobSeekers" && (
+          <section className="section careers-section page-section">
+            <div className="container careers-grid">
+              <div className="career-art" aria-hidden="true"><div className="art-circle" /><div className="art-card art-card-top"><span className="art-label">{t.careers.artLabel}</span><strong>{t.careers.artTitle}<br /><em>{t.careers.artAccent}</em></strong></div><div className="art-card art-card-bottom"><Check size={15} /> {t.careers.cv} <span /><Check size={15} /> {t.careers.interviews}</div><span className="art-star">✦</span></div>
+              <div className="careers-copy"><div className="eyebrow">{t.jobSeekers.eyebrow}</div><h1>{t.jobSeekers.title} <em>{t.jobSeekers.accent}</em></h1><p>{t.jobSeekers.copy}</p><ul className="check-list">{t.careers.steps.map((step) => <li key={step}><Check size={17} /> {step}</li>)}</ul><a className="button button-primary" href={`${pageHref("about")}#contact`}>{t.jobSeekers.cta} <ArrowRight size={17} /></a></div>
+            </div>
+          </section>
+        )}
+
+        {page === "students" && (
+          <section className="section learning-section page-section students-section">
+            <div className="container">
+              <div className="section-heading-row audience-page-heading">
+                <div><div className="eyebrow eyebrow-light">{t.students.eyebrow}</div><h1>{t.students.title} <em>{t.students.accent}</em></h1></div>
+                <p>{t.students.copy}</p>
+              </div>
+              <h2 className="student-resources-heading">{t.students.resourcesTitle}</h2>
+              <div className="track-list">
+                {t.learning.tracks.map((track, index) => <article className="track-item" key={track.title}><span className="track-number">0{index + 1}</span><span><strong>{track.title}</strong><small>{track.copy}</small></span><ArrowUpRight size={18} /></article>)}
+              </div>
             </div>
           </section>
         )}

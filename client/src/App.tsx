@@ -5,16 +5,12 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import { SitePage } from "./lib/siteCopy";
+import { sitePagePaths, type SitePage } from "./lib/siteCopy";
 
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
-const pageByPath: Record<string, SitePage> = {
-  "/": "home",
-  "/learn": "learn",
-  "/careers": "careers",
-  "/organizations": "organizations",
-  "/about": "about",
-};
+const pageByPath = Object.fromEntries(
+  Object.entries(sitePagePaths).map(([page, routePath]) => [routePath, page]),
+) as Record<string, SitePage>;
 
 function getCurrentPage(): SitePage | undefined {
   let pathname = window.location.pathname;

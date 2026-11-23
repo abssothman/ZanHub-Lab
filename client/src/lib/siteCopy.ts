@@ -1,5 +1,16 @@
 export type SiteLanguage = "en" | "sw";
-export type SitePage = "home" | "learn" | "careers" | "organizations" | "about";
+export const sitePages = ["home", "learn", "careers", "organizations", "about", "peopleAtWork", "jobSeekers", "students"] as const;
+export type SitePage = (typeof sitePages)[number];
+export const sitePagePaths: Record<SitePage, string> = {
+  home: "/",
+  learn: "/learn",
+  careers: "/careers",
+  organizations: "/organizations",
+  about: "/about",
+  peopleAtWork: "/people-at-work",
+  jobSeekers: "/job-seekers",
+  students: "/students",
+};
 
 export const siteCopy = {
   en: {
@@ -13,6 +24,9 @@ export const siteCopy = {
       careers: "Career resources — ZanHR Lab",
       organizations: "For organizations — ZanHR Lab",
       about: "About and contact — ZanHR Lab",
+      peopleAtWork: "People at work — ZanHR Lab",
+      jobSeekers: "Resources for job seekers — ZanHR Lab",
+      students: "Resources for students — ZanHR Lab",
     },
     pageDescriptions: {
       home: "Explore practical HR education, career support, workplace rights and people-management resources for Africa.",
@@ -20,6 +34,9 @@ export const siteCopy = {
       careers: "Career resources for CVs, interviews and planning, with practical support for people building their working lives.",
       organizations: "Practical people systems, better hiring and team-culture guidance for organizations across Africa.",
       about: "Learn about ZanHR Lab's people-first approach and get in touch for practical HR learning and workplace support.",
+      peopleAtWork: "Understand workplace rights, relationships, and responsibilities with practical guidance for people at work.",
+      jobSeekers: "Practical job-search support for clearer CVs, more confident interviews, and intentional career planning.",
+      students: "Build practical human-resources knowledge and connect classroom learning with the world of work.",
     },
     nav: {
       home: "Home",
@@ -27,7 +44,12 @@ export const siteCopy = {
       careers: "Careers",
       organizations: "Organizations",
       about: "About / Contact",
+      peopleAtWork: "People at work",
+      jobSeekers: "Job seekers",
+      students: "Students",
     },
+    audienceNavLabel: "Explore by audience",
+    comingSoon: "Coming soon",
     startExploring: "Start exploring",
     hero: {
       eyebrow: "Human resources, made human",
@@ -106,6 +128,31 @@ export const siteCopy = {
         { title: "Team culture", copy: "Everyday behaviors that create more engaged workplaces." },
       ],
     },
+    peopleAtWork: {
+      eyebrow: "For people at work",
+      title: "Understand your rights,",
+      accent: "relationships, and responsibilities.",
+      copy: "Practical guidance for understanding the people side of work and making healthier workplaces easier to navigate.",
+      topics: [
+        { title: "Workplace rights", copy: "Make employment rights, labour relations, and HR laws easier to understand." },
+        { title: "Work relationships", copy: "Understand the relationships and responsibilities that shape everyday work." },
+        { title: "Better workplaces", copy: "Small shifts in behavior, policies, and systems that make work better." },
+      ],
+    },
+    jobSeekers: {
+      eyebrow: "For job seekers",
+      title: "Your next opportunity starts with",
+      accent: "a clearer plan.",
+      copy: "Build a stronger CV, prepare for interviews with confidence, and make your next career move more intentional.",
+      cta: "Ask us about career support",
+    },
+    students: {
+      eyebrow: "For students",
+      title: "Turn classroom learning into",
+      accent: "workplace confidence.",
+      copy: "Explore practical learning paths that connect human-resources foundations with the realities of work.",
+      resourcesTitle: "Explore the learning paths",
+    },
     values: {
       eyebrow: "The ZanHR standard",
       title: "People first.",
@@ -157,6 +204,9 @@ export const siteCopy = {
       careers: "Rasilimali za taaluma — ZanHR Lab",
       organizations: "Kwa taasisi — ZanHR Lab",
       about: "Kuhusu na mawasiliano — ZanHR Lab",
+      peopleAtWork: "Watu kazini — ZanHR Lab",
+      jobSeekers: "Rasilimali kwa wanaotafuta kazi — ZanHR Lab",
+      students: "Rasilimali kwa wanafunzi — ZanHR Lab",
     },
     pageDescriptions: {
       home: "Pata elimu ya vitendo ya rasilimali watu, mwongozo wa taaluma, haki kazini na rasilimali za usimamizi wa watu barani Afrika.",
@@ -164,6 +214,9 @@ export const siteCopy = {
       careers: "Rasilimali za kuboresha wasifu, usaili na mipango ya taaluma kwa watu wanaojenga maisha yao ya kazi.",
       organizations: "Mifumo bora ya watu, uajiri wenye tija na mwongozo wa utamaduni wa timu kwa taasisi barani Afrika.",
       about: "Fahamu mtazamo wa ZanHR Lab unaoweka watu mbele na wasiliana nasi kuhusu elimu ya rasilimali watu na kazi.",
+      peopleAtWork: "Elewa haki, mahusiano na wajibu kazini kwa mwongozo wa vitendo kwa watu wanaofanya kazi.",
+      jobSeekers: "Mwongozo wa kutafuta kazi, kuboresha wasifu, kufanya usaili kwa ujasiri na kupanga taaluma.",
+      students: "Jenga maarifa ya vitendo ya rasilimali watu na unganisha masomo ya darasani na ulimwengu wa kazi.",
     },
     nav: {
       home: "Mwanzo",
@@ -171,7 +224,12 @@ export const siteCopy = {
       careers: "Taaluma",
       organizations: "Taasisi",
       about: "Kuhusu / Mawasiliano",
+      peopleAtWork: "Watu kazini",
+      jobSeekers: "Wanaotafuta kazi",
+      students: "Wanafunzi",
     },
+    audienceNavLabel: "Chunguza kwa kundi",
+    comingSoon: "Inakuja hivi karibuni",
     startExploring: "Anza kuchunguza",
     hero: {
       eyebrow: "Rasilimali watu, kwa ubinadamu",
@@ -249,6 +307,31 @@ export const siteCopy = {
         { title: "Uajiri bora", copy: "Uajiri unaoheshimu mahitaji ya nafasi na utu wa mwombaji." },
         { title: "Utamaduni wa timu", copy: "Tabia za kila siku zinazojenga mazingira ya kazi yenye ushirikiano." },
       ],
+    },
+    peopleAtWork: {
+      eyebrow: "Kwa watu kazini",
+      title: "Elewa haki,",
+      accent: "mahusiano na wajibu wako.",
+      copy: "Mwongozo wa vitendo wa kuelewa upande wa watu kazini na kuendesha mazingira bora ya kazi kwa urahisi zaidi.",
+      topics: [
+        { title: "Haki kazini", copy: "Elewa haki za ajira, mahusiano kazini na sheria za rasilimali watu." },
+        { title: "Mahusiano kazini", copy: "Elewa mahusiano na wajibu unaounda maisha ya kila siku kazini." },
+        { title: "Mazingira bora ya kazi", copy: "Mabadiliko madogo katika tabia, sera na mifumo yanayoboresha kazi." },
+      ],
+    },
+    jobSeekers: {
+      eyebrow: "Kwa wanaotafuta kazi",
+      title: "Fursa yako inayofuata huanza na",
+      accent: "mpango ulio wazi.",
+      copy: "Boresha wasifu wako, jiandae kwa usaili kwa ujasiri na panga hatua inayofuata ya taaluma yako kwa makusudi.",
+      cta: "Uliza kuhusu msaada wa taaluma",
+    },
+    students: {
+      eyebrow: "Kwa wanafunzi",
+      title: "Geuza masomo ya darasani kuwa",
+      accent: "ujuzi wa vitendo kazini.",
+      copy: "Chunguza njia za kujifunza zinazounganisha misingi ya rasilimali watu na hali halisi ya kazi.",
+      resourcesTitle: "Chunguza njia za kujifunza",
     },
     values: {
       eyebrow: "Kiwango cha ZanHR",

@@ -5,6 +5,9 @@
     { "path": "/careers/", "title": "Career resources — ZanHR Lab" },
     { "path": "/organizations/", "title": "For organizations — ZanHR Lab" },
     { "path": "/about/", "title": "About and contact — ZanHR Lab" },
+    { "path": "/people-at-work/", "title": "People at work — ZanHR Lab" },
+    { "path": "/job-seekers/", "title": "Resources for job seekers — ZanHR Lab" },
+    { "path": "/students/", "title": "Resources for students — ZanHR Lab" },
     { "path": "/404", "title": "Page not found — ZanHR Lab" }
   ]
 }

@@ -7,7 +7,6 @@ import { createServer } from "vite";
 const outputDirectory = path.resolve("dist/public");
 const shellPath = path.join(outputDirectory, "index.html");
 const publicRoot = "https://abssothman.github.io/ZanHub-Lab";
-const pages = ["home", "learn", "careers", "organizations", "about"];
 const escapeHtml = (value) => value.replace(/[&<>"']/g, (character) => ({
   "&": "&amp;",
   "<": "&lt;",
@@ -24,15 +23,18 @@ const vite = await createServer({
 });
 
 try {
-  const [{ default: Page }, { siteCopy }] = await Promise.all([
+  const [{ default: Page }, { siteCopy, sitePagePaths }] = await Promise.all([
     vite.ssrLoadModule("/src/pages/Home.tsx"),
     vite.ssrLoadModule("/src/lib/siteCopy.ts"),
   ]);
   const copy = siteCopy.en;
 
+  const pages = Object.keys(sitePagePaths);
+
   for (const page of pages) {
-    const slug = page === "home" ? "" : `${page}/`;
-    const canonicalUrl = `${publicRoot}/${slug}`;
+    const routePath = sitePagePaths[page];
+    const slug = routePath === "/" ? "" : routePath.slice(1);
+    const canonicalUrl = `${publicRoot}${routePath === "/" ? "/" : `${routePath}/`}`;
     const title = copy.pageTitles[page];
     const description = copy.pageDescriptions[page];
     const htmlBody = renderToString(createElement(Page, { page }));
@@ -56,9 +58,9 @@ try {
       .replace("</head>", `    ${headMetadata}\n  </head>`)
       .replace('<div id="root"></div>', `<div id="root">${htmlBody}</div>`);
 
-    const destination = page === "home"
-      ? shellPath
-      : path.join(outputDirectory, page, "index.html");
+    const destination = slug
+      ? path.join(outputDirectory, slug, "index.html")
+      : shellPath;
     await mkdir(path.dirname(destination), { recursive: true });
     await writeFile(destination, pageHtml);
   }
