@@ -19,7 +19,7 @@ import {
   X,
   Youtube,
 } from "lucide-react";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { siteCopy, sitePagePaths, type SiteLanguage, type SitePage } from "@/lib/siteCopy";
 
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -59,8 +59,6 @@ function LanguagePicker({
 export default function Home({ page = "home" }: { page?: SitePage }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [language, setLanguage] = useState<SiteLanguage>("en");
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
   const t = siteCopy[language];
 
   useEffect(() => {
@@ -84,19 +82,20 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
     window.localStorage.setItem("zanhr-language", language);
   }, [language, page, t]);
 
-  const handleSubscribe = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!email.trim()) return;
-    setSubscribed(true);
-  };
-
   const closeMenu = () => setMenuOpen(false);
-  const navItems: { page: SitePage; label: string }[] = [
+  const desktopNavItems: { page: SitePage; label: string }[] = [
     { page: "home", label: t.nav.home },
     { page: "learn", label: t.nav.learn },
     { page: "careers", label: t.nav.careers },
     { page: "organizations", label: t.nav.organizations },
     { page: "about", label: t.nav.about },
+    { page: "contact", label: t.nav.contact },
+  ];
+  const mobilePrimaryNavItems: { page: SitePage; label: string }[] = [
+    { page: "home", label: t.nav.home },
+    { page: "about", label: t.nav.about },
+    { page: "contact", label: t.nav.contact },
+    { page: "newsletter", label: t.nav.newsletter },
   ];
   const audienceNavItems: { page: SitePage; label: string }[] = [
     { page: "organizations", label: t.nav.organizations },
@@ -114,7 +113,7 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
           </a>
 
           <nav className="site-nav hidden items-center gap-6 lg:flex" aria-label={t.navigationLabel}>
-            {navItems.map((item) => (
+            {desktopNavItems.map((item) => (
               <a
                 key={item.page}
                 href={pageHref(item.page)}
@@ -144,7 +143,7 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
         </div>
         {menuOpen && (
           <nav className="mobile-menu lg:hidden" aria-label={t.navigationLabel}>
-            {navItems.filter((item) => item.page !== "organizations").map((item) => (
+            {mobilePrimaryNavItems.map((item) => (
               <a
                 key={item.page}
                 href={pageHref(item.page)}
@@ -167,9 +166,6 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
                 {item.label}
               </a>
             ))}
-            <a href={pageHref("learn")} className="header-cta mt-2 inline-flex" onClick={closeMenu}>
-              {t.startExploring} <ArrowUpRight size={16} />
-            </a>
           </nav>
         )}
       </header>
@@ -258,7 +254,7 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
                   <div className="feature-stamp"><Compass size={19} /> {t.learning.startHere}</div>
                   <h2>{t.learning.featureTitle}</h2>
                   <p>{t.learning.featureCopy}</p>
-                  <a href={`${pageHref("about")}#contact`} className="button button-light">{t.learning.browse} <ArrowRight size={17} /></a>
+                  <a href={pageHref("newsletter")} className="button button-light">{t.learning.browse} <ArrowRight size={17} /></a>
                   <div className="feature-corner" aria-hidden="true">Z</div>
                 </div>
                 <div className="track-list">
@@ -273,7 +269,7 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
           <section id="careers" className="section careers-section page-section">
             <div className="container careers-grid">
               <div className="career-art" aria-hidden="true"><div className="art-circle" /><div className="art-card art-card-top"><span className="art-label">{t.careers.artLabel}</span><strong>{t.careers.artTitle}<br /><em>{t.careers.artAccent}</em></strong></div><div className="art-card art-card-bottom"><Check size={15} /> {t.careers.cv} <span /><Check size={15} /> {t.careers.interviews}</div><span className="art-star">✦</span></div>
-              <div className="careers-copy"><div className="eyebrow">{t.careers.eyebrow}</div><h1>{t.careers.title} <span>{t.careers.accent}</span></h1><p>{t.careers.copy}</p><ul className="check-list">{t.careers.steps.map((step) => <li key={step}><Check size={17} /> {step}</li>)}</ul><a className="button button-primary" href={`${pageHref("about")}#contact`}>{t.careers.cta} <ArrowRight size={17} /></a></div>
+              <div className="careers-copy"><div className="eyebrow">{t.careers.eyebrow}</div><h1>{t.careers.title} <span>{t.careers.accent}</span></h1><p>{t.careers.copy}</p><ul className="check-list">{t.careers.steps.map((step) => <li key={step}><Check size={17} /> {step}</li>)}</ul><a className="button button-primary" href={pageHref("contact")}>{t.careers.cta} <ArrowRight size={17} /></a></div>
             </div>
           </section>
         )}
@@ -282,7 +278,7 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
           <section id="organizations" className="section org-section page-section">
             <div className="container"><div className="coming-soon-notice" role="status"><Sparkles size={17} aria-hidden="true" />{t.comingSoon}</div></div>
             <div className="container org-grid">
-              <div className="org-copy"><div className="eyebrow">{t.organizations.eyebrow}</div><h1>{t.organizations.title} <em>{t.organizations.accent}</em>{t.organizations.titleEnd}</h1><p>{t.organizations.copy}</p><a className="text-link" href={`${pageHref("about")}#contact`}>{t.organizations.link} <ArrowRight size={16} /></a></div>
+              <div className="org-copy"><div className="eyebrow">{t.organizations.eyebrow}</div><h1>{t.organizations.title} <em>{t.organizations.accent}</em>{t.organizations.titleEnd}</h1><p>{t.organizations.copy}</p><a className="text-link" href={pageHref("contact")}>{t.organizations.link} <ArrowRight size={16} /></a></div>
               <div className="org-pillars">{t.organizations.pillars.map((pillar, index) => <div className="pillar" key={pillar.title}><span>0{index + 1}</span><strong>{pillar.title}</strong><p>{pillar.copy}</p></div>)}</div>
             </div>
           </section>
@@ -307,7 +303,7 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
           <section className="section careers-section page-section">
             <div className="container careers-grid">
               <div className="career-art" aria-hidden="true"><div className="art-circle" /><div className="art-card art-card-top"><span className="art-label">{t.careers.artLabel}</span><strong>{t.careers.artTitle}<br /><em>{t.careers.artAccent}</em></strong></div><div className="art-card art-card-bottom"><Check size={15} /> {t.careers.cv} <span /><Check size={15} /> {t.careers.interviews}</div><span className="art-star">✦</span></div>
-              <div className="careers-copy"><div className="eyebrow">{t.jobSeekers.eyebrow}</div><h1>{t.jobSeekers.title} <em>{t.jobSeekers.accent}</em></h1><p>{t.jobSeekers.copy}</p><ul className="check-list">{t.careers.steps.map((step) => <li key={step}><Check size={17} /> {step}</li>)}</ul><a className="button button-primary" href={`${pageHref("about")}#contact`}>{t.jobSeekers.cta} <ArrowRight size={17} /></a></div>
+              <div className="careers-copy"><div className="eyebrow">{t.jobSeekers.eyebrow}</div><h1>{t.jobSeekers.title} <em>{t.jobSeekers.accent}</em></h1><p>{t.jobSeekers.copy}</p><ul className="check-list">{t.careers.steps.map((step) => <li key={step}><Check size={17} /> {step}</li>)}</ul><a className="button button-primary" href={pageHref("contact")}>{t.jobSeekers.cta} <ArrowRight size={17} /></a></div>
             </div>
           </section>
         )}
@@ -328,18 +324,39 @@ export default function Home({ page = "home" }: { page?: SitePage }) {
         )}
 
         {page === "about" && (
-          <>
-            <section id="about" className="section values-section page-section">
-              <div className="container values-layout"><div className="values-intro"><div className="eyebrow">{t.values.eyebrow}</div><h1>{t.values.title}<br /><em>{t.values.accent}</em></h1><div className="quote-mark"><Quote size={34} /></div><blockquote>{t.values.quote}</blockquote><p>{t.values.copy}</p></div><div className="values-list">{t.values.items.map(([title, copy], index) => <div className="value-row" key={title}><span>0{index + 1}</span><strong>{title}</strong><p>{copy}</p></div>)}</div></div>
-            </section>
-            <section id="contact" className="section contact-section">
-              <div className="container contact-card"><div className="contact-copy"><div className="eyebrow eyebrow-light">{t.contact.eyebrow}</div><h2>{t.contact.title}</h2><p>{t.contact.copy}</p></div><div className="newsletter-box">{subscribed ? <div className="success-state"><div className="success-icon"><Check size={20} /></div><h3>{t.contact.successTitle}</h3><p>{t.contact.successCopy}</p></div> : <form onSubmit={handleSubscribe}><label htmlFor="email">{t.contact.emailLabel}</label><div className="newsletter-input"><input id="email" type="email" required placeholder={t.contact.placeholder} value={email} onChange={(event) => setEmail(event.target.value)} /><button type="submit" aria-label={t.contact.subscribe}><ArrowRight size={18} /></button></div><small>{t.contact.consent}</small></form>}</div></div>
-            </section>
-          </>
+          <section id="about" className="section values-section page-section">
+            <div className="container values-layout"><div className="values-intro"><div className="eyebrow">{t.values.eyebrow}</div><h1>{t.values.title}<br /><em>{t.values.accent}</em></h1><div className="quote-mark"><Quote size={34} /></div><blockquote>{t.values.quote}</blockquote><p>{t.values.copy}</p></div><div className="values-list">{t.values.items.map(([title, copy], index) => <div className="value-row" key={title}><span>0{index + 1}</span><strong>{title}</strong><p>{copy}</p></div>)}</div></div>
+          </section>
+        )}
+        {page === "contact" && (
+          <section className="section contact-section page-section">
+            <div className="container contact-card">
+              <div className="contact-copy"><div className="eyebrow eyebrow-light">{t.contactPage.eyebrow}</div><h1>{t.contactPage.title}</h1><p>{t.contactPage.copy}</p></div>
+              <div className="newsletter-box"><strong>{t.contactPage.emailLabel}</strong><a className="contact-email" href={`mailto:${t.contactPage.emailAddress}`}>{t.contactPage.emailAddress}</a><a className="button button-primary" href={`mailto:${t.contactPage.emailAddress}`}>{t.contactPage.emailCta} <ArrowRight size={17} /></a></div>
+            </div>
+          </section>
+        )}
+        {page === "newsletter" && (
+          <section id="newsletter" className="section contact-section page-section">
+            <div className="container contact-card">
+              <div className="contact-copy"><div className="eyebrow eyebrow-light">{t.newsletter.eyebrow}</div><h1>{t.newsletter.title}</h1><p>{t.newsletter.copy}</p></div>
+              <div className="newsletter-box"><p className="newsletter-note">{t.newsletter.emailNote}</p><a className="button button-primary" href="mailto:hello@zanhrlab.com?subject=Newsletter%20subscription%20request">{t.newsletter.emailCta} <ArrowRight size={17} /></a></div>
+            </div>
+          </section>
         )}
       </main>
 
-      <footer className="site-footer"><div className="container footer-main"><div className="footer-brand"><a href={pageHref("home")} className="brand-lockup" aria-label="ZanHR Lab home"><img src={brandLogoSrc} alt="ZanHR Lab" className="brand-logo" /></a><p>{t.footer.brandCopy}</p></div><div className="footer-links"><div><span className="footer-heading">{t.footer.explore}</span><a href={`${pageHref("home")}#why`}>{t.footer.why}</a><a href={pageHref("learn")}>{t.footer.learning}</a><a href={pageHref("careers")}>{t.footer.careerResources}</a></div><div><span className="footer-heading">{t.footer.connect}</span><a href={`${pageHref("about")}#contact`}>{t.footer.newsletter}</a><a href={pageHref("organizations")}>{t.footer.forOrganizations}</a><a href="mailto:hello@zanhrlab.com">hello@zanhrlab.com</a></div></div><div className="social-links"><span className="footer-heading">{t.footer.follow}</span><div><a href="#contact" aria-label="YouTube"><Youtube size={18} /></a><a href="#contact" aria-label="Instagram"><Instagram size={18} /></a><a href="#contact" aria-label="LinkedIn"><Linkedin size={18} /></a><a href="#contact" aria-label="Facebook"><Facebook size={18} /></a></div></div></div><div className="container footer-bottom"><span>{t.footer.copyright}</span><span>{t.footer.topics}</span></div></footer>
+      <footer className="site-footer">
+        <div className="container footer-main">
+          <div className="footer-brand"><a href={pageHref("home")} className="brand-lockup" aria-label="ZanHR Lab home"><img src={brandLogoSrc} alt="ZanHR Lab" className="brand-logo" /></a><p>{t.footer.brandCopy}</p></div>
+          <div className="footer-links">
+            <div><span className="footer-heading">{t.footer.explore}</span><a href={`${pageHref("home")}#why`}>{t.footer.why}</a><a href={pageHref("about")}>{t.footer.about}</a><a href={pageHref("learn")}>{t.footer.learning}</a><a href={pageHref("careers")}>{t.footer.careerResources}</a></div>
+            <div><span className="footer-heading">{t.footer.connect}</span><a href={pageHref("contact")}>{t.footer.contact}</a><a href={pageHref("newsletter")}>{t.footer.newsletter}</a><a href={pageHref("organizations")}>{t.footer.forOrganizations}</a><a href="mailto:hello@zanhrlab.com">hello@zanhrlab.com</a></div>
+          </div>
+          <div className="social-links"><span className="footer-heading">{t.footer.follow}</span><div><a href="#contact" aria-label="YouTube"><Youtube size={18} /></a><a href="#contact" aria-label="Instagram"><Instagram size={18} /></a><a href="#contact" aria-label="LinkedIn"><Linkedin size={18} /></a><a href="#contact" aria-label="Facebook"><Facebook size={18} /></a></div></div>
+        </div>
+        <div className="container footer-bottom"><span>{t.footer.copyright}</span><span>{t.footer.topics}</span></div>
+      </footer>
     </div>
   );
 }

@@ -16,6 +16,11 @@
 - [x] Present career development resources for CV improvement, interview preparation, LinkedIn development, and career planning.
 - [x] Present workplace and organization resources covering HR practices, policies, recruitment, employee engagement, and workplace systems.
 
+## Mobile navigation and separate destinations
+- [x] In the mobile hamburger menu, remove Learning and Careers from the Home section while keeping the Explore by audience destinations available.
+- [x] Provide separate About and Contact pages and separate navigation destinations; do not combine them on one page.
+- [x] Provide a dedicated Newsletter page and add it to the Home section of the mobile hamburger menu; if no working subscription service exists, explain the limitation instead of implying signups are stored.
+
 ## Credibility and growth
 - [x] Highlight integrity, learning, practicality, accessibility, innovation, and professionalism.
 - [x] Position future career services, HR consulting, corporate training, recruitment support, analytics, and HR technology as planned growth areas.
